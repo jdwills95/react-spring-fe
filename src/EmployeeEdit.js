@@ -45,17 +45,17 @@ class EmployeeEdit extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const {item} = this.state;
-
-    await fetch('/api/employee', {
-      method: (item.id) ? 'PUT' : 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(item),
+    
+    await fetch('/api/employee/'+(item.id), {
+    method: (item.id) ? 'PUT' : 'POST',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(item),
     });
     this.props.history.push('/employees');
-  }
+    }
 
   render() {
     const {item} = this.state;
