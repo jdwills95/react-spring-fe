@@ -62,64 +62,64 @@ class EmployeeEdit extends Component {
     const title = <h2>{item.id ? 'Edit Employee' : 'Add Employee'}</h2>;
 
     return <div>
-    <AppNavbar/>
-    <Container>
-      {title}
-      <Form onSubmit={this.handleSubmit}>
-        <FormGroup>
-          <Label for="fname">First Name</Label>
-          <Input type="text" name="fname" id="fname" value={item.fname || ''}
-                 onChange={this.handleChange} autoComplete="fname"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="lname">Last Name</Label>
-          <Input type="text" name="lname" id="lname" value={item.lname || ''}
-                 onChange={this.handleChange} autoComplete="lname"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="address">Address</Label>
-          <Input type="text" name="address" id="address" value={item.address || ''}
-                 onChange={this.handleChange} autoComplete="address-level1"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="city">City</Label>
-          <Input type="text" name="city" id="city" value={item.city || ''}
-                 onChange={this.handleChange} autoComplete="address-level1"/>
-        </FormGroup>
-        <div className="row">
-          <FormGroup className="col-md-4 mb-3">
-            <Label for="stateOrProvince">State/Province</Label>
-            <Input type="text" name="stateOrProvince" id="stateOrProvince" value={item.stateOrProvince || ''}
+      <AppNavbar/>
+      <Container>
+        {title}
+        <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            <Label for="fname">First Name</Label>
+            <Input type="text" name="fname" id="fname" value={item.fname || ''}
+                   onChange={this.handleChange} autoComplete="fname"/>
+          </FormGroup>
+          <FormGroup>
+            <Label for="lname">Last Name</Label>
+            <Input type="text" name="lname" id="lname" value={item.lname || ''}
+                   onChange={this.handleChange} autoComplete="lname"/>
+          </FormGroup>
+          <FormGroup>
+            <Label for="address">Address</Label>
+            <Input type="text" name="address" id="address" value={item.address || ''}
                    onChange={this.handleChange} autoComplete="address-level1"/>
           </FormGroup>
-          <FormGroup className="col-md-3 mb-3">
-            <Label for="country">Postal Code</Label>
-            <Input type="text" name="postalCode" id="postalCode" value={item.postalCode || ''}
+          <FormGroup>
+            <Label for="city">City</Label>
+            <Input type="text" name="city" id="city" value={item.city || ''}
                    onChange={this.handleChange} autoComplete="address-level1"/>
           </FormGroup>
+          <div className="row">
+            <FormGroup className="col-md-4 mb-3">
+              <Label for="stateOrProvince">State/Province</Label>
+              <Input type="text" name="stateOrProvince" id="stateOrProvince" value={item.stateOrProvince || ''}
+                     onChange={this.handleChange} autoComplete="address-level1"/>
+            </FormGroup>
+            <FormGroup className="col-md-3 mb-3">
+              <Label for="country">Postal Code</Label>
+              <Input type="text" name="postalCode" id="postalCode" value={item.postalCode || ''}
+                     onChange={this.handleChange} autoComplete="address-level1"/>
+            </FormGroup>
           </div>
           <FormGroup>
             <Label for="homePhone">Home Phone</Label>
             <Input type="text" name="homePhone" id="homePhone" value={item.homePhone || ''}
-                  onChange={this.handleChange} autoComplete="homePhone"/>
+                   onChange={this.handleChange} autoComplete="homePhone"/>
           </FormGroup>
           <FormGroup>
             <Label for="cellPhone">Cell Phone</Label>
             <Input type="text" name="cellPhone" id="cellPhone" value={item.cellPhone || ''}
-                  onChange={this.handleChange} autoComplete="cellPhone"/>
+                   onChange={this.handleChange} autoComplete="cellPhone"/>
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
             <Input type="text" name="email" id="email" value={item.email || ''}
-                  onChange={this.handleChange} autoComplete="email"/>
+                   onChange={this.handleChange} autoComplete="email"/>
           </FormGroup>
-        <FormGroup>
-          <Button color="primary" type="submit">Save</Button>{' '}
-          <Button color="secondary" tag={Link} to="/employees">Cancel</Button>
-        </FormGroup>
-      </Form>
-    </Container>
-  </div>
+          <FormGroup>
+            <Button color="primary" type="submit">Save</Button>{' '}
+            <Button color="secondary" tag={Link} to="/employees">Cancel</Button>
+          </FormGroup>
+        </Form>
+      </Container>
+    </div>
   }
 }
 

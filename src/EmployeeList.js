@@ -40,7 +40,7 @@ class EmployeeList extends Component {
     }
 
     const employeeList = employees.map(employee => {
-      const address = `${employee.address || ''} ${employee.city || ''} ${employee.stateOrProvince || ''}`;
+      
       return <tr key={employee.id}>
         <td style={{whiteSpace: 'nowrap'}}>{employee.fname} {employee.lname}</td>
         <td>{employee.email}</td>
