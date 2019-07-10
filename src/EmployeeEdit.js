@@ -30,6 +30,7 @@ class EmployeeEdit extends Component {
         homeState: '',
         cellState: '',
         emailState: '',
+        submitState: ''
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -128,6 +129,7 @@ class EmployeeEdit extends Component {
     if (this.props.match.params.id !== 'new') {
       const employee = await (await fetch(`/api/employee/${this.props.match.params.id}`)).json();
       this.setState({item: employee});
+      this.state.validate.submitState = true;
     }
   }
 
@@ -138,6 +140,7 @@ class EmployeeEdit extends Component {
     let item = {...this.state.item};
     item[name] = value;
     this.setState({item});
+    this.canBeSubmitted();
   }
 
   async handleSubmit(event) {
@@ -158,10 +161,27 @@ class EmployeeEdit extends Component {
     submitForm(e) {
       e.preventDefault();
     }
+    
+    canBeSubmitted() {
+      if (this.state.validate.fnameState != 'has-danger'   && this.state.item.fname != '' &&
+          this.state.validate.lnameState != 'has-danger'   && this.state.item.lname != '' &&
+          this.state.validate.addressState != 'has-danger' && this.state.item.address != '' && 
+          this.state.validate.cityState != 'has-danger'    && this.state.item.city != '' &&
+          this.state.validate.zipState != 'has-danger'     && this.state.item.postalCode != '' && 
+          this.state.validate.homeState != 'has-danger'    && this.state.item.homePhone != '' &&
+          this.state.validate.cellState != 'has-danger'    && this.state.item.cellPhone != '' && 
+          this.state.validate.emailState != 'has-danger'   && this.state.item.email != ''
+      ) {
+        this.state.validate.submitState = true;
+      }else{
+        this.state.validate.submitState = false;
+      }
+    };
 
   render() {
     const {item} = this.state;
     const title = <h2>{item.id ? 'Edit Employee' : 'Add Employee'}</h2>;
+    this.canBeSubmitted();
 
     return <div>
       <AppNavbar/>
@@ -171,7 +191,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="fname">First Name</Label>
             <Input type="text" name="fname" id="fname" placeholder="First Name" value={item.fname || ''}
-                   onChange={this.handleChange} autoComplete="fname"valid={ this.state.validate.fnameState === 'has-success' }
+                   autoComplete="fname"valid={ this.state.validate.fnameState === 'has-success' }
                    invalid={ this.state.validate.fnameState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateFname(e)
@@ -184,7 +204,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="lname">Last Name</Label>
             <Input type="text" name="lname" id="lname" placeholder="Last Name" value={item.lname || ''}
-                   onChange={this.handleChange} autoComplete="lname"valid={ this.state.validate.lnameState === 'has-success' }
+                   autoComplete="lname"valid={ this.state.validate.lnameState === 'has-success' }
                    invalid={ this.state.validate.lnameState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateLname(e)
@@ -197,7 +217,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="address">Address</Label>
             <Input type="text" name="address" id="address" placeholder="Address" value={item.address || ''}
-                   onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.addressState === 'has-success' }
+                   autoComplete="address-level1"valid={ this.state.validate.addressState === 'has-success' }
                    invalid={ this.state.validate.addressState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateAddress(e)
@@ -211,7 +231,7 @@ class EmployeeEdit extends Component {
             <FormGroup className="col-md-4 mb-3">
               <Label for="city">City</Label>
               <Input type="text" name="city" id="city" placeholder="City" value={item.city || ''}
-                   onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.cityState === 'has-success' }
+                   autoComplete="address-level1"valid={ this.state.validate.cityState === 'has-success' }
                    invalid={ this.state.validate.cityState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateCity(e)
@@ -240,7 +260,7 @@ class EmployeeEdit extends Component {
             <FormGroup className="col-md-3 mb-3">
               <Label for="country">Postal Code</Label>
               <Input type="text" name="postalCode" id="postalCode" placeholder="Postal Code" value={item.postalCode || ''}
-                     onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.zipState === 'has-success' }
+                     autoComplete="address-level1"valid={ this.state.validate.zipState === 'has-success' }
                      invalid={ this.state.validate.zipState === 'has-danger' }
                      onChange={ (e) => {
                                  this.validateZip(e)
@@ -254,7 +274,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="homePhone">Home Phone</Label>
             <Input type="text" name="homePhone" id="homePhone" placeholder="Home Phone" value={item.homePhone || ''}
-                   onChange={this.handleChange} autoComplete="homePhone"valid={ this.state.validate.homeState === 'has-success' }
+                   autoComplete="homePhone"valid={ this.state.validate.homeState === 'has-success' }
                    invalid={ this.state.validate.homeState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateHome(e)
@@ -267,7 +287,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="cellPhone">Cell Phone</Label>
             <Input type="text" name="cellPhone" id="cellPhone" placeholder="Cell Phone" value={item.cellPhone || ''}
-                   onChange={this.handleChange} autoComplete="cellPhone" valid={ this.state.validate.cellState === 'has-success' }
+                   autoComplete="cellPhone" valid={ this.state.validate.cellState === 'has-success' }
                    invalid={ this.state.validate.cellState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateCell(e)
@@ -280,7 +300,7 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="email">Email</Label>
             <Input type="text" name="email" id="email" placeholder="Email" value={item.email || ''}
-                   onChange={this.handleChange} autoComplete="email" valid={ this.state.validate.emailState === 'has-success' }
+                   autoComplete="email" valid={ this.state.validate.emailState === 'has-success' }
                    invalid={ this.state.validate.emailState === 'has-danger' }
                    onChange={ (e) => {
                                this.validateEmail(e)
@@ -291,7 +311,7 @@ class EmployeeEdit extends Component {
               </FormFeedback>
           </FormGroup>
           <FormGroup>
-            <Button color="primary" type="submit">Save</Button>{' '}
+            <Button color="primary" type="submit" disabled={!this.state.validate.submitState}>Save</Button>{' '}
             <Button color="secondary" tag={Link} to="/employees">Cancel</Button>
           </FormGroup>
         </Form>
