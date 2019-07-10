@@ -22,12 +22,96 @@ class EmployeeEdit extends Component {
     this.state = {
       item: this.emptyItem,
       validate: {
+        fnameState: '',
+        lnameState: '',
+        addressState: '',
+        cityState: '',
+        zipState: '',
+        homeState: '',
+        cellState: '',
         emailState: '',
       }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  validateFname(e) {
+    const fnameRex = /^[A-Za-z]{2,35}$/;
+    const { validate } = this.state
+      if (fnameRex.test(e.target.value)) {
+        validate.fnameState = 'has-success'
+      } else {
+        validate.fnameState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateLname(e) {
+    const lnameRex = /^[A-Za-z]{2,35}$/;
+    const { validate } = this.state
+      if (lnameRex.test(e.target.value)) {
+        validate.lnameState = 'has-success'
+      } else {
+        validate.lnameState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateAddress(e) {
+    const addressRex = /^\d{1,3}.?\d{0,3}\s[a-zA-Z]{2,30}\s[a-zA-Z]{2,15}$/;
+    const { validate } = this.state
+      if (addressRex.test(e.target.value)) {
+        validate.addressState = 'has-success'
+      } else {
+        validate.addressState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateCity(e) {
+    const cityRex = /^[A-Za-z]{5,50}$/;
+    const { validate } = this.state
+      if (cityRex.test(e.target.value)) {
+        validate.cityState = 'has-success'
+      } else {
+        validate.cityState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateZip(e) {
+    const zipRex = /^\d{5}(?:[-\s]\d{4})?$/;
+    const { validate } = this.state
+      if (zipRex.test(e.target.value)) {
+        validate.zipState = 'has-success'
+      } else {
+        validate.zipState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateHome(e) {
+    const homeRex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+    const { validate } = this.state
+      if (homeRex.test(e.target.value)) {
+        validate.homeState = 'has-success'
+      } else {
+        validate.homeState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
+
+  validateCell(e) {
+    const cellRex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+    const { validate } = this.state
+      if (cellRex.test(e.target.value)) {
+        validate.cellState = 'has-success'
+      } else {
+        validate.cellState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
 
   validateEmail(e) {
     const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -87,23 +171,55 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="fname">First Name</Label>
             <Input type="text" name="fname" id="fname" placeholder="First Name" value={item.fname || ''}
-                   onChange={this.handleChange} autoComplete="fname"/>
+                   onChange={this.handleChange} autoComplete="fname"valid={ this.state.validate.fnameState === 'has-success' }
+                   invalid={ this.state.validate.fnameState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateFname(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid First Name. Please enter a correct First Name.
+              </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="lname">Last Name</Label>
             <Input type="text" name="lname" id="lname" placeholder="Last Name" value={item.lname || ''}
-                   onChange={this.handleChange} autoComplete="lname"/>
+                   onChange={this.handleChange} autoComplete="lname"valid={ this.state.validate.lnameState === 'has-success' }
+                   invalid={ this.state.validate.lnameState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateLname(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid Lat Name. Please enter a correct Last Name.
+              </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="address">Address</Label>
             <Input type="text" name="address" id="address" placeholder="Address" value={item.address || ''}
-                   onChange={this.handleChange} autoComplete="address-level1"/>
+                   onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.addressState === 'has-success' }
+                   invalid={ this.state.validate.addressState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateAddress(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid Address. Please enter a correct Address.
+              </FormFeedback>
           </FormGroup>
           <div className="row">
             <FormGroup className="col-md-4 mb-3">
               <Label for="city">City</Label>
               <Input type="text" name="city" id="city" placeholder="City" value={item.city || ''}
-                   onChange={this.handleChange} autoComplete="address-level1"/>
+                   onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.cityState === 'has-success' }
+                   invalid={ this.state.validate.cityState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateCity(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid City name. Please enter a correct City name.
+              </FormFeedback>
             </FormGroup>
             <FormGroup className="col-md-4 mb-3">
               <Label for="stateOrProvince">State</Label>
@@ -124,18 +240,42 @@ class EmployeeEdit extends Component {
             <FormGroup className="col-md-3 mb-3">
               <Label for="country">Postal Code</Label>
               <Input type="text" name="postalCode" id="postalCode" placeholder="Postal Code" value={item.postalCode || ''}
-                     onChange={this.handleChange} autoComplete="address-level1"/>
+                     onChange={this.handleChange} autoComplete="address-level1"valid={ this.state.validate.zipState === 'has-success' }
+                     invalid={ this.state.validate.zipState === 'has-danger' }
+                     onChange={ (e) => {
+                                 this.validateZip(e)
+                                 this.handleChange(e)
+                               } }/>
+                <FormFeedback>
+                  Invalid Postal Code. Please enter a correct Postal Code.
+                </FormFeedback>
             </FormGroup>
           </div>
           <FormGroup>
             <Label for="homePhone">Home Phone</Label>
             <Input type="text" name="homePhone" id="homePhone" placeholder="Home Phone" value={item.homePhone || ''}
-                   onChange={this.handleChange} autoComplete="homePhone"/>
+                   onChange={this.handleChange} autoComplete="homePhone"valid={ this.state.validate.homeState === 'has-success' }
+                   invalid={ this.state.validate.homeState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateHome(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid Home Phone number. Please enter a correct Home Phone number.
+              </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="cellPhone">Cell Phone</Label>
             <Input type="text" name="cellPhone" id="cellPhone" placeholder="Cell Phone" value={item.cellPhone || ''}
-                   onChange={this.handleChange} autoComplete="cellPhone"/>
+                   onChange={this.handleChange} autoComplete="cellPhone" valid={ this.state.validate.cellState === 'has-success' }
+                   invalid={ this.state.validate.cellState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateCell(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid CellPhone number. Please enter a correct CellPhone number.
+              </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
@@ -147,7 +287,7 @@ class EmployeeEdit extends Component {
                                this.handleChange(e)
                              } }/>
               <FormFeedback>
-                Invalid email address. Please input a correct email address.
+                Invalid email address. Please enter a correct email address.
               </FormFeedback>
           </FormGroup>
           <FormGroup>
