@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Container, Form, FormGroup, FormFeedback, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
 class EmployeeEdit extends Component {
@@ -20,11 +20,25 @@ class EmployeeEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: this.emptyItem
+      item: this.emptyItem,
+      validate: {
+        emailState: '',
+      }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  validateEmail(e) {
+    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const { validate } = this.state
+      if (emailRex.test(e.target.value)) {
+        validate.emailState = 'has-success'
+      } else {
+        validate.emailState = 'has-danger'
+      }
+      this.setState({ validate })
+    }
 
   async componentDidMount() {
     if (this.props.match.params.id !== 'new') {
@@ -55,6 +69,10 @@ class EmployeeEdit extends Component {
     body: JSON.stringify(item),
     });
     this.props.history.push('/employees');
+    }
+
+    submitForm(e) {
+      e.preventDefault();
     }
 
   render() {
@@ -122,7 +140,15 @@ class EmployeeEdit extends Component {
           <FormGroup>
             <Label for="email">Email</Label>
             <Input type="text" name="email" id="email" placeholder="Email" value={item.email || ''}
-                   onChange={this.handleChange} autoComplete="email"/>
+                   onChange={this.handleChange} autoComplete="email" valid={ this.state.validate.emailState === 'has-success' }
+                   invalid={ this.state.validate.emailState === 'has-danger' }
+                   onChange={ (e) => {
+                               this.validateEmail(e)
+                               this.handleChange(e)
+                             } }/>
+              <FormFeedback>
+                Invalid email address. Please input a correct email address.
+              </FormFeedback>
           </FormGroup>
           <FormGroup>
             <Button color="primary" type="submit">Save</Button>{' '}

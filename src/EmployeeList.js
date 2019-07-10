@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import { Button, ButtonGroup, Container, Table, Spinner  } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ class EmployeeList extends Component {
     const {employees, isLoading} = this.state;
 
     if (isLoading) {
-      return <p>Loading...</p>;
+      return <p>Loading... </p>;
     }
 
     const employeeList = employees.map(employee => {
